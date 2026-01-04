@@ -1,0 +1,27 @@
+<h3>Students in {{ deptName }}</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Student ID</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Grade</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (student of students; track $index) {
+      <tr>
+        <td>{{ student.studentId }}</td>
+        <td>{{ student.name }}</td>
+        <td>{{ student.age }}</td>
+        <td>{{ student.grade }}</td>
+        <td>{{ student.email }}</td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+@if (students.length === 0) {
+  <p>No students found in this department.</p>
+}

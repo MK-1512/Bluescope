@@ -1,18 +1,19 @@
 <table>
   <thead>
     <tr>
-      <th>school id</th>
-      <th>school name</th>
-      <th>view departments</th>
+      <th>School ID</th>
+      <th>School Name</th>
+      <th>Actions</th>
     </tr>
   </thead>
-
   <tbody>
     @for (school of schools; track $index) {
       <tr>
         <td>{{ school.schoolId }}</td>
         <td>{{ school.schoolName }}</td>
-        <td><button>view departments</button></td>
+        <td>
+          <button (click)="navigateViewDept(school.schoolId)">View Departments</button>
+        </td>
       </tr>
     }
   </tbody>

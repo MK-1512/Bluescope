@@ -1,1 +1,25 @@
-<p>departments works!</p>
+<h3>Departments</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Department ID</th>
+      <th>Department Name</th>
+      <th>View Students</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (dept of departments; track $index) {
+      <tr>
+        <td>{{ dept.departmentId }}</td>
+        <td>{{ dept.departmentName }}</td>
+        <td>
+            <button (click)="navigateViewStudents(dept.departmentId)">view students</button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+@if (departments.length === 0) {
+  <p>No departments found for this school.</p>
+}
