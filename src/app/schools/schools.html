@@ -1,0 +1,19 @@
+<table>
+  <thead>
+    <tr>
+      <th>school id</th>
+      <th>school name</th>
+      <th>view departments</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (school of schools; track $index) {
+      <tr>
+        <td>{{ school.schoolId }}</td>
+        <td>{{ school.schoolName }}</td>
+        <td><button>view departments</button></td>
+      </tr>
+    }
+  </tbody>
+</table>
