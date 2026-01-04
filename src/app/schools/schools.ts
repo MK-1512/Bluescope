@@ -25,7 +25,7 @@ navigateViewDept(){
   ngOnInit(): void {
     this.dataService.getSchools().subscribe(data =>{
       this.schoolData=data;
-
+const newSchools = [];
      for(let country of this.schoolData.countries){
       for(let state of country.states){
         for(let school of state.schools){
@@ -33,10 +33,11 @@ navigateViewDept(){
            schoolId : school.schoolId,
            schoolName :school.schoolName
           }
-           this.schools.push(schoolInfo);
+          newSchools.push(schoolInfo);
         }
       }
      }
+     this.schools = newSchools;
      console.log(this.schoolData)
     })
   }
