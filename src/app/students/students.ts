@@ -1,7 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataService } from '../data-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-students',
@@ -10,41 +9,17 @@ import { DataService } from '../data-service';
   templateUrl: './students.html',
   styleUrl: './students.css',
 })
-export class Students implements OnInit {
-  private route = inject(ActivatedRoute);
-  private dataService = inject(DataService);
+export class Students {
+  @Input() studentList: any[] = [];
+  @Output() goBack = new EventEmitter<void>();
+  
+  private router = inject(Router);
 
-  schoolId: string | null = null;
-  deptId: string | null = null;
-  students: any[] = [];
-  deptName: string = '';
-
-  ngOnInit(): void {
-    this.schoolId = this.route.snapshot.paramMap.get('schoolId');
-    this.deptId = this.route.snapshot.paramMap.get('deptId');
-
-    if (this.schoolId && this.deptId) {
-      this.dataService.getSchools().subscribe(data => {
-        this.findStudentData(data, this.schoolId!, this.deptId!);
-      });
-    }
+  viewDetails(studentId: string) {
+    this.router.navigate(['/student-details', studentId]);
   }
 
-  findStudentData(data: any, schoolId: string, deptId: string) {
-    for (let country of data.countries) {
-      for (let state of country.states) {
-        for (let school of state.schools) {
-          if (school.schoolId === schoolId) {
-            for (let dept of school.departments) {
-              if (dept.departmentId === deptId) {
-                this.deptName = dept.departmentName;
-                this.students = dept.students;
-                return;
-              }
-            }
-          }
-        }
-      }
-    }
+  onBack() {
+    this.goBack.emit();
   }
 }

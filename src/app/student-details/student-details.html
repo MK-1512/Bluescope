@@ -1,0 +1,30 @@
+<div class="container">
+  <button (click)="goBack()"> Back</button>
+  
+  <h2>Student Details</h2>
+  
+  @if (studentInfo) {
+    <table>
+      <thead>
+        <tr>
+          <th>Student ID</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Grade</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ studentInfo.studentId }}</td>
+          <td>{{ studentInfo.name }}</td>
+          <td>{{ studentInfo.age }}</td>
+          <td>{{ studentInfo.grade }}</td>
+          <td>{{ studentInfo.email }}</td>
+        </tr>
+      </tbody>
+    </table>
+  } @else {
+    <p>Loading student details...</p>
+  }
+</div>

@@ -1,24 +1,25 @@
-<h3>Students in {{ deptName }}</h3>
+<div class="header">
+  <button (click)="onBack()"> Back to Departments</button>
+  <h3>Student List</h3>
+</div>
+
 <table>
   <thead>
     <tr>
       <th>Student ID</th>
       <th>Name</th>
-      <th>Age</th>
-      <th>Grade</th>
-      <th>Email</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
-    @for (student of students; track $index) {
+    @for (student of studentList; track $index) {
       <tr>
         <td>{{ student.studentId }}</td>
         <td>{{ student.name }}</td>
-        <td>{{ student.age }}</td>
-        <td>{{ student.grade }}</td>
-        <td>{{ student.email }}</td>
+        <td>
+          <button (click)="viewDetails(student.studentId)">View Details</button>
+        </td>
       </tr>
     }
   </tbody>
 </table>
-

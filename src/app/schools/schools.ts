@@ -1,44 +1,65 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { DataService } from '../data-service';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { DataService } from '../data-service';
+import { Departments } from '../departments/departments';
+import { Students } from '../students/students';
 
 @Component({
   selector: 'app-schools',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, Departments, Students],
   templateUrl: './schools.html',
   styleUrl: './schools.css',
 })
 export class Schools implements OnInit {
-  private router = inject(Router);
   private dataService = inject(DataService);
 
-  schoolData: any;
-  schools: any[] = [];
+  schoolsList: any[] = [];
+  selectedSchool: any;
+  selectedStudents: any[] = [];
 
-  navigateViewDept(schoolId: string) {
-    this.router.navigate(['/viewDepartments', schoolId]);
-  }
+  showSchoolsList = true;
+  showDepartments = false;
+  showStudentsList = false;
 
   ngOnInit(): void {
-    this.dataService.getSchools().subscribe((data) => {
-      this.schoolData = data;
-      const newSchools = [];
-
-      if (this.schoolData && this.schoolData.countries) {
-        for (let country of this.schoolData.countries) {
+    this.dataService.getSchools().subscribe(data => {
+      const tempSchools = [];
+      if (data && data.countries) {
+        for (let country of data.countries) {
           for (let state of country.states) {
             for (let school of state.schools) {
-              newSchools.push({
-                schoolId: school.schoolId,
-                schoolName: school.schoolName,
-              });
+               tempSchools.push(school);
             }
           }
         }
       }
-      this.schools = newSchools;
+      this.schoolsList = tempSchools;
     });
+  }
+
+  viewDepartments(school: any) {
+    this.selectedSchool = school;
+    this.showSchoolsList = false;
+    this.showDepartments = true;
+  }
+
+  handleDepartmentSelection(department: any) {
+    this.selectedStudents = department.students;
+    this.showDepartments = false;
+    this.showStudentsList = true;
+  }
+
+
+  backToSchools() {
+    this.showDepartments = false;
+    this.showSchoolsList = true;
+    this.selectedSchool = null;
+  }
+
+  backToDepartments() {
+    this.showStudentsList = false;
+    this.showDepartments = true;
+    this.selectedStudents = [];
   }
 }

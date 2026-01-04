@@ -1,25 +1,25 @@
-<h3>Departments</h3>
+<div class="header">
+  <button (click)="onBack()"> Back to Schools</button>
+  <h3>Departments for {{ schoolData.schoolName }}</h3>
+</div>
+
 <table>
   <thead>
     <tr>
-      <th>Department ID</th>
-      <th>Department Name</th>
-      <th>View Students</th>
+      <th>Dept ID</th>
+      <th>Dept Name</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
-    @for (dept of departments; track $index) {
+    @for (dept of schoolData.departments; track $index) {
       <tr>
         <td>{{ dept.departmentId }}</td>
         <td>{{ dept.departmentName }}</td>
         <td>
-            <button (click)="navigateViewStudents(dept.departmentId)">view students</button>
+          <button (click)="viewStudents(dept)">View Students</button>
         </td>
       </tr>
     }
   </tbody>
 </table>
-
-@if (departments.length === 0) {
-  <p>No departments found for this school.</p>
-}

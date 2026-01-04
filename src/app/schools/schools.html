@@ -1,20 +1,40 @@
-<table>
-  <thead>
-    <tr>
-      <th>School ID</th>
-      <th>School Name</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (school of schools; track $index) {
-      <tr>
-        <td>{{ school.schoolId }}</td>
-        <td>{{ school.schoolName }}</td>
-        <td>
-          <button (click)="navigateViewDept(school.schoolId)">View Departments</button>
-        </td>
-      </tr>
-    }
-  </tbody>
-</table>
+<div class="container">
+  
+  @if (showSchoolsList) {
+    <h2>Schools List</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>School ID</th>
+          <th>School Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (school of schoolsList; track $index) {
+          <tr>
+            <td>{{ school.schoolId }}</td>
+            <td>{{ school.schoolName }}</td>
+            <td>
+              <button (click)="viewDepartments(school)">View Departments</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  @if (showDepartments) {
+    <app-departments 
+      [schoolData]="selectedSchool" 
+      (departmentSelected)="handleDepartmentSelection($event)"
+      (goBack)="backToSchools()"> </app-departments>
+  }
+
+  @if (showStudentsList) {
+    <app-students 
+      [studentList]="selectedStudents"
+      (goBack)="backToDepartments()"> </app-students>
+  }
+
+</div>

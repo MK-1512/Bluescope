@@ -11,19 +11,19 @@ export class DataService {
   private transferState = inject(TransferState);
   private platformId = inject(PLATFORM_ID);
 
-  private SCHOOLS_KEY = makeStateKey<any>('schools-data');
-  private jsonUrl = 'assets/data.json'; 
+  private DATA_KEY = makeStateKey<any>('app-data');
+  private jsonUrl = 'assets/data.json';
 
   getSchools(): Observable<any> {
-    if (this.transferState.hasKey(this.SCHOOLS_KEY)) {
-      const data = this.transferState.get(this.SCHOOLS_KEY, null);
+    if (this.transferState.hasKey(this.DATA_KEY)) {
+      const data = this.transferState.get(this.DATA_KEY, null);
       return of(data);
     }
 
     return this.http.get<any>(this.jsonUrl).pipe(
       tap(data => {
         if (isPlatformServer(this.platformId)) {
-          this.transferState.set(this.SCHOOLS_KEY, data);
+          this.transferState.set(this.DATA_KEY, data);
         }
       })
     );
